@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   # http://guides.rubyonrails.org/maintenance_policy.html
   s.add_dependency 'rails', '~> 5.0' # Keep in sync with version supported by Hyrax
 
-  s.add_development_dependency 'active-fedora'
+  s.add_development_dependency 'active-fedora', '~> 11.0'
   s.add_development_dependency 'valkyrie'
 
   # s.add_development_dependency 'bixby', '~> 1.0.0' # rubocop styleguide

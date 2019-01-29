@@ -35,38 +35,40 @@ describe ValkyrieActiveFedora::Base do
   end
 
   describe '#attributes_including_linked_ids' do
-    let(:book) { Book.new(id: 'book_1', pages: [page]) }
-    let(:page) { Page.new(id: 'page_1') }
-
-    before do
-      class Book < ValkyrieActiveFedora::Base
-        has_many :pages, inverse_of: :created # predicate: ::RDF::Vocab::DC.created
+    context 'for has_many and belongs_to relationships' do
+      before :all do
+        class Library < ValkyrieActiveFedora::Base
+          has_many :books
+        end
+        class Book < ValkyrieActiveFedora::Base
+          belongs_to :library, predicate: ActiveFedora::RDF::Fcrepo::RelsExt.isPartOf
+        end
       end
 
-      class Page < ValkyrieActiveFedora::Base
-        has_and_belongs_to_many :created, predicate: ::RDF::Vocab::DC.created, class_name: 'Book'
+      after :all do
+        Object.send(:remove_const, :Library)
+        Object.send(:remove_const, :Book)
+      end
+
+      let(:library1) { Library.create(id: 'lib1', books: [book1]) }
+      # let(:book1) { Book.create(id: 'bk1', library: library1) }
+      let(:book1) { Book.create(id: 'bk1') }
+
+      before do
+        book1.library = library1
+        book1.save
+      end
+
+      it "inserts ids of child objects into parent's attributes" do
+        expected_results = { "id"=>"lib1", "book_ids"=>["bk1"] }
+        # expect(library1.attributes_including_linked_ids).to eq expected_results
+        expect(library1.reload.attributes_including_linked_ids).to eq expected_results
+      end
+
+      it "inserts ids of parent objects into child's attributes" do
+        expected_results = { "id"=>"bk1", "library_id"=>"lib1" }
+        expect(book1.reload.attributes_including_linked_ids).to eq expected_results
       end
     end
-
-    after do
-      Object.send(:remove_const, :Book)
-      Object.send(:remove_const, :Page)
-    end
-
-    it 'does something' do
-byebug
-      expected_results = book.attributes_including_linked_ids
-      expect(expected_results).to eq true
-      # expect(foo_history.attributes_including_linked_ids).to eq true
-    end
-
-    # local_attributes = attributes.dup
-    # reflections.keys.each do |key|
-    #   id_method = "#{key.to_s.singularize}_ids"
-    #   next unless self.respond_to? id_method
-    #   local_attributes.merge!(id_method => self.send(id_method)).with_indifferent_access
-    # end
-    # local_attributes
   end
-
 end
