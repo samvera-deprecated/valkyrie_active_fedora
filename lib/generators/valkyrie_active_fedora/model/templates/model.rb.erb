@@ -1,6 +1,6 @@
 # Generated via
-#  `rails generate active_fedora:model <%= class_name %>`
-class <%= class_name %> < ActiveFedora::Base
+#  `rails generate valkyrie_active_fedora:model <%= class_name %>`
+class <%= class_name %> < ValkyrieActiveFedora::Base
   <% if options['datastream'] %>
   has_subresource :descMetadata, class_name: "<%= options['datastream'] %>"
   <% else %>

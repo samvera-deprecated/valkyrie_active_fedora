@@ -1,10 +1,10 @@
 require 'rails/generators'
 
-module ActiveFedora
+module ValkyrieActiveFedora
   class ConfigGenerator < Rails::Generators::Base
     def generate_configs
-      generate('active_fedora:config:fedora')
-      generate('active_fedora:config:solr')
+      generate('valkyrie_active_fedora:config:fedora')
+      generate('valkyrie_active_fedora:config:solr')
     end
   end
 end

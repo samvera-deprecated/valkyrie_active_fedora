@@ -2,7 +2,7 @@ APP_ROOT = File.expand_path("#{File.dirname(__FILE__)}/../../")
 
 require 'solr_wrapper'
 require 'fcrepo_wrapper'
-require 'active_fedora/rake_support'
+require 'valkyrie_active_fedora/rake_support'
 
 namespace :valkyrie_active_fedora do
   # Use yard to build docs
@@ -41,12 +41,23 @@ namespace :valkyrie_active_fedora do
     spec.rcov = true
   end
 
-  desc "CI build"
-  task :ci do
-    Rake::Task['valkyrie_active_fedora:rubocop'].invoke unless ENV['NO_RUBOCOP']
+  # desc "CI build"
+  # task :ci do
+  #   Rake::Task['valkyrie_active_fedora:rubocop'].invoke unless ENV['NO_RUBOCOP']
+  #   ENV['environment'] = "test"
+  #   with_test_server do
+  #     Rake::Task['valkyrie_active_fedora:coverage'].invoke
+  #   end
+  # end
+
+  task ci: [:rubocop] do
+    require 'solr_wrapper'   # necessary for rake_support to work
+    require 'fcrepo_wrapper' # necessary for rake_support to work
+    require 'active_fedora/rake_support'
+
     ENV['environment'] = "test"
     with_test_server do
-      Rake::Task['valkyrie_active_fedora:coverage'].invoke
+      Rake::Task['spec'].invoke
     end
   end
 

@@ -2,7 +2,7 @@ Description:
   Generate a class that inherits from ActiveFedora::Base
 
 Example:
-  rails generate active_fedora:model Journal
+  rails generate valkyrie_active_fedora:model Journal
 
   This will create:
     app/models/journal.rb
