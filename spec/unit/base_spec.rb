@@ -69,6 +69,10 @@ describe ValkyrieActiveFedora::Base do
         expected_results = { 'id' => 'bk1', 'library_id' => 'lib1' }
         expect(book1.reload.attributes_including_linked_ids).to eq expected_results
       end
+
+      it "knows the keys of the linked items" do
+        expect(library1.reload.linked_id_keys).to eq(['book_ids'])
+      end
     end
   end
 end
