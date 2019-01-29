@@ -1,5 +1,3 @@
-require 'byebug'
-
 # Starts a fedora server and a solr server on a random port and then
 # yields the passed block
 def with_test_server(&block)
@@ -23,7 +21,6 @@ def with_server(environment)
     unless Dir.exist?(solr_config_path)
       $stderr.puts "Solr configuration not found at #{solr_config_path}. Using ValkyrieActiveFedora defaults"
       # Otherwise use the configs delivered with ValkyrieActiveFedora.
-byebug
       solr_config_path = File.join(File.expand_path("../..", File.dirname(__FILE__)), 'lib', 'generators', 'valkyrie_active_fedora', 'config', 'solr', 'templates', 'solr', 'config')
     end
     solr.with_collection(name: "hydra-#{environment}", dir: solr_config_path) do
