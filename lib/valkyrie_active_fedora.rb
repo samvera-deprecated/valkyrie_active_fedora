@@ -5,5 +5,6 @@ module ValkyrieActiveFedora
 
   eager_autoload do
     autoload :Base
+    autoload :ResourceFactory
   end
 end
