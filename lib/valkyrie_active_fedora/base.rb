@@ -10,7 +10,7 @@ module ValkyrieActiveFedora
   #   end
   class Base < ActiveFedora::Base
     def valkyrie_resource
-      "Valkyrie::#{self.class}".constantize
+      "Valkyrie::#{self.class}".constantize.new
     rescue NameError
       nil
     end
