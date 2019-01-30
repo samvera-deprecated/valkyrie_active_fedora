@@ -18,3 +18,13 @@ Style/PercentLiteralDelimiters:
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 82
+
+RSpec/ExampleLength:
+  Max: 9
+  Exclude:
+    - 'spec/**_spec.rb'
+
+## DO NOT MERGE THIS UNCOMMENTED!  To allow byebug when debugging, uncomment the following.
+#Lint/Debugger:
+#  Exclude:
+#    - '**/*'
