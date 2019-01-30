@@ -39,23 +39,14 @@ module ValkyrieActiveFedora
           active_fedora_local.send(:properties).each_key do |property_name|
             attribute property_name.to_sym, ::Valkyrie::Types::String
           end
+          active_fedora_local.linked_id_keys.each do |linked_property_name|
+            attribute linked_property_name.to_sym, ::Valkyrie::Types::Set.of(::Valkyrie::Types::ID)
+          end
         end
       end
 
-      klass.new(id: active_fedora_object.id, **active_fedora_object.attributes.symbolize_keys)
+      klass.new(id: active_fedora_object.id, **active_fedora_object.attributes_including_linked_ids.symbolize_keys)
     end
-
-    # private
-    #
-    #   def attributes_including_linked_ids
-    #     local_attributes = attributes.dup
-    #     reflections.keys.each do |key|
-    #       id_method = "#{key.to_s.singularize}_ids"
-    #       next unless self.respond_to? id_method
-    #       local_attributes.merge!(id_method => self.send(id_method)).with_indifferent_access
-    #     end
-    #     local_attributes
-    #   end
   end
   # rubocop:enable Style/ClassVars
 end

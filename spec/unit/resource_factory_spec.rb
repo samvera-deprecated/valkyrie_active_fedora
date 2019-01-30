@@ -5,27 +5,26 @@ RSpec.describe ValkyrieActiveFedora::ResourceFactory do
   subject(:factory) { described_class.new(active_fedora_object: book) }
 
   class BookWithPages < ValkyrieActiveFedora::Base
-    # has_many :pages
+    has_many :pages
     property :title, predicate: ::RDF::Vocab::DC.title
     property :contributor, predicate: ::RDF::Vocab::DC.contributor
     property :description, predicate: ::RDF::Vocab::DC.description
   end
-  # class Page < ValkyrieActiveFedora::Base
-  #   belongs_to :book_with_pages, predicate: ActiveFedora::RDF::Fcrepo::RelsExt.isPartOf
-  # end
+  class Page < ValkyrieActiveFedora::Base
+    belongs_to :book_with_pages, predicate: ActiveFedora::RDF::Fcrepo::RelsExt.isPartOf
+  end
 
   let(:id)          { 'moomin123' }
   let(:book)        { BookWithPages.new(id: id, **attributes) }
-  # let(:page1)       { Page.new(id: 'pg1') }
-  # let(:page2)       { Page.new(id: 'pg2') }
+  let(:page1)       { Page.new(id: 'pg1') }
+  let(:page2)       { Page.new(id: 'pg2') }
 
   let(:attributes) do
     {
-      title: ['fake title'],
+      title: ['fake title', 'fake title 2'],
       contributor: ['user1'],
-      description: ['a description']
-      # description: ['a description'],
-      # pages: [page1, page2]
+      description: ['a description'],
+      pages: [page1, page2]
     }
   end
 
@@ -57,8 +56,11 @@ RSpec.describe ValkyrieActiveFedora::ResourceFactory do
         .to have_attributes title: book.title,
                             contributor: book.contributor,
                             description: book.description
-      #                      description: book.description,
-      #                      page_ids: [page1.id, page2.id]
+      expect_ids_to_match(factory.build.page_ids, ['pg1', 'pg2'])
     end
+  end
+
+  def expect_ids_to_match(valkyrie_ids, expected_ids)
+    expect(valkyrie_ids.map(&:id)).to match_array expected_ids
   end
 end
