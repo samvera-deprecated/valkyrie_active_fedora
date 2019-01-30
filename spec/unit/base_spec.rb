@@ -25,7 +25,7 @@ describe ValkyrieActiveFedora::Base do
         Valkyrie.send(:remove_const, :FooHistory)
       end
       it 'returns the Valkyrie class' do
-        expect(foo_history.valkyrie_resource).to eq Valkyrie::FooHistory
+        expect(foo_history.valkyrie_resource).to be_kind_of Valkyrie::FooHistory
       end
     end
 
