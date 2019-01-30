@@ -4,14 +4,12 @@ source "https://rubygems.org"
 
 gemspec path: File.expand_path('..', __FILE__)
 
+gem 'activemodel', ENV['RAILS_VERSION'] if ENV['RAILS_VERSION']
 gem 'byebug' unless ENV['TRAVIS']
+gem 'jruby-openssl', platform: :jruby
 gem 'pry-byebug' unless ENV['CI']
 
-gem 'activemodel', ENV['RAILS_VERSION'] if ENV['RAILS_VERSION']
-
 group :test do
-  gem 'simplecov', require: false
   gem 'coveralls', require: false
-  end
-
-gem 'jruby-openssl', platform: :jruby
+  gem 'simplecov', require: false
+end
