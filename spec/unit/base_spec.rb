@@ -51,8 +51,7 @@ describe ValkyrieActiveFedora::Base do
       end
 
       let(:library1) { Library.create(id: 'lib1', books: [book1]) }
-      # let(:book1) { Book.create(id: 'bk1', library: library1) }
-      let(:book1) { Book.create(id: 'bk1') }
+      let(:book1) { Book.new(id: 'bk1') }
 
       before do
         book1.library = library1
@@ -61,7 +60,6 @@ describe ValkyrieActiveFedora::Base do
 
       it "inserts ids of child objects into parent's attributes" do
         expected_results = { 'id' => 'lib1', 'book_ids' => ['bk1'] }
-        # expect(library1.attributes_including_linked_ids).to eq expected_results
         expect(library1.reload.attributes_including_linked_ids).to eq expected_results
       end
 
