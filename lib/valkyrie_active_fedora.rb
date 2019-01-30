@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require 'valkyrie_active_fedora/version'
 
 module ValkyrieActiveFedora

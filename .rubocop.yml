@@ -1,5 +1,5 @@
 inherit_gem:
-#  bixby: bixby_default.yml
+  bixby: bixby_default.yml
 
 inherit_from: .rubocop_todo.yml
 
@@ -25,6 +25,13 @@ Lint/AssignmentInCondition:
 
 Metrics/LineLength:
   Enabled: false
+
+Metrics/BlockLength:
+  ExcludedMethods: ['included']
+  Exclude:
+    - 'valkyrie_active_fedora.gemspec'
+    - 'lib/tasks/*.rake'
+    - 'spec/**/*.rb'
 
 Metrics/AbcSize:
   Enabled: false

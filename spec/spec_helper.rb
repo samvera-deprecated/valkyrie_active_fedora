@@ -42,7 +42,7 @@ restore_spec_configuration
 require 'active_fedora/cleaner'
 RSpec.configure do |config|
   # Stub out test stuff.
-  config.before(:each) do
+  config.before do
     begin
       ActiveFedora::Cleaner.clean!
     rescue Faraday::ConnectionFailed, RSolr::Error::ConnectionRefused => e

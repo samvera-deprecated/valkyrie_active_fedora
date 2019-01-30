@@ -29,7 +29,7 @@ describe ValkyrieActiveFedora::Base do
       end
     end
 
-    it 'should return nil when the Valkyrie version of the class is NOT defined' do
+    it 'returns nil when the Valkyrie version of the class is NOT defined' do
       expect(foo_history.valkyrie_resource).to eq nil
     end
   end
@@ -60,13 +60,13 @@ describe ValkyrieActiveFedora::Base do
       end
 
       it "inserts ids of child objects into parent's attributes" do
-        expected_results = { "id"=>"lib1", "book_ids"=>["bk1"] }
+        expected_results = { 'id' => 'lib1', 'book_ids' => ['bk1'] }
         # expect(library1.attributes_including_linked_ids).to eq expected_results
         expect(library1.reload.attributes_including_linked_ids).to eq expected_results
       end
 
       it "inserts ids of parent objects into child's attributes" do
-        expected_results = { "id"=>"bk1", "library_id"=>"lib1" }
+        expected_results = { 'id' => 'bk1', 'library_id' => 'lib1' }
         expect(book1.reload.attributes_including_linked_ids).to eq expected_results
       end
     end
