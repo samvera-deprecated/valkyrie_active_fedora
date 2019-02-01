@@ -1,3 +1,5 @@
+# NOT IN USE
+
 # ValkyrieActiveFedora
 
 Extends ActiveFedora gem to place nicely with Valkyrie data mapper gem.
